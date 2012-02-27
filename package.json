@@ -1,0 +1,32 @@
+{
+	"bin": {
+		"codepaint": "./bin/codepaint"
+	},
+    "dependencies": {
+        "esprima": "*",
+        "optimist": "*"
+    },
+    "description": "A JavaScript beautifier that can infer coding style from a sample",
+    "name": "codepainter", 
+    "main": "./codepainter",
+    "licenses": [
+    	{
+    		"type": "MIT",
+    		"url": "http://github.com/fawek/codepainter/raw/master/LICENSE"
+    	}
+    ],
+    "maintainers": [
+    	{
+    		"name": "Jakub Wieczorek",
+    		"email": "jakubw@jakubw.net",
+    		"web": "http://jakubw.net"
+    	}
+    ],
+    "repositories": [
+    	{
+    		"type": "git",
+    		"url": "http://github.com/fawek/codepainter.git"
+    	}
+    ],
+    "version": "0.0.1"
+}

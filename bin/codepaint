@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const optimist = require('optimist');
+const codepainter = require('../codepainter');
+
+var argv = optimist.options({
+    'input': {
+        alias: 'i',
+        default: 'stdin',
+        describe: 'File path to read from',
+        type: 'string'
+    },
+    'output': {
+        alias: 'o',
+        default: 'stdout',
+        describe: 'File path to write to',
+        type: 'string'
+    },
+    'sample': {
+        alias: 's',
+        describe: 'Code sample path to infer the style from',
+        type: 'string'
+    },
+    // FIXME: Make it possible to specify this in a file.
+    'style': {
+        describe: 'JSON string describing the coding style',
+        type: 'string'
+    }
+}).check(function (argv) {
+    return typeof argv.sample !== 'undefined' || typeof argv.style !== 'undefined';
+}).argv;
+
+var input;
+if (argv.input === 'stdin') {
+    input = process.stdin;
+} else {
+    input = fs.createReadStream(argv.input);
+    input.pause();
+}
+input.setEncoding('utf-8');
+
+var output;
+if (argv.output === 'stdout')
+    output = process.stdout;
+else
+    output = fs.createWriteStream(argv.output);
+
+function transform(style) {
+    codepainter.transform(input, style, output, function (error) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+    });
+}
+
+if (typeof argv.style !== 'undefined') {
+    var style = JSON.parse(argv.style);
+    transform(style);
+} else {
+    var sample;
+    sample = fs.createReadStream(argv.sample);
+    sample.pause();
+    sample.setEncoding('utf-8');
+    
+    codepainter.infer(sample, function (error, style) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+        transform(style);
+    });
+}
