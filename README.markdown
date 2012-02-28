@@ -29,4 +29,12 @@ Supported style properties
 
 1.  **QuoteType**: *single*, *double*
 
-    Specifies what kind of quoting you would like to use for string literals. Adds proper escaping when necessary, obviously.
+    Specifies what kind of quoting you would like to use for string literals:
+    `console.log("Hello world!")` -> `console.log('Hello world!')`
+    Adds proper escaping when necessary, obviously.
+    `console.log('Foo "Bar" Baz')` -> `console.log("Foo \"Bar\" Baz")`
+    
+2.  **SpaceAfterControlStatements**: *present*, *omitted*
+
+    Specifies whether or not there should be a space between if/for/while and the following (.
+    `if(x === 4)` -> `if (x === 4)` or `while (foo()) {` -> `while(foo()) {`
