@@ -37,7 +37,7 @@ module.exports.transform = function (input, style, output, callback) {
        
     for (var i = 0; i < rules.length; i++) {
         var rule = rules[i];
-        if (typeof style[rule.name] !== 'undefined')
+        if (typeof style[rule.name] !== 'undefined' && style[rule.name] !== null)
             enabledRules.push(rule);
     }
        
