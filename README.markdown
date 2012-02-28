@@ -38,3 +38,8 @@ Supported style properties
 
     Specifies whether or not there should be a space between if/for/while and the following (.
     `if(x === 4)` -> `if (x === 4)` or `while (foo()) {` -> `while(foo()) {`
+
+3.  **SpaceAfterAnonymousFunctions**: *present*, *omitted*
+
+    Specifies whether or not there should be a space between function and () in anonymous functions.
+    `function(x) { }` -> `function (x) { }`
