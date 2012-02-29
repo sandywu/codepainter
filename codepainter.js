@@ -14,12 +14,14 @@ module.exports.infer = function (sample, callback) {
         var left = rules.length;
         for (var i = 0; i < rules.length; i++) {
             var rule = rules[i];
-            rule.infer(tokenizer, function (error, value) {
-                style[rule.name] = value;
-                left--;
-                if (left === 0)
-                    callback(null, style);
-            });
+            rule.infer(tokenizer, (function (name) {
+                return function (error, value) {
+                    style[name] = value;
+                    left--;
+                    if (left === 0)
+                        callback(null, style);
+                };
+            })(rule.name));
         }
     } else {
         callback(null, style);
