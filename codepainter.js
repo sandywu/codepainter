@@ -7,9 +7,9 @@ module.exports.infer = function (sample, callback) {
     var left = rules.length,
         style = {},
         tokenizer = new Tokenizer();
-        
+
     sample.pipe(tokenizer);
-        
+
     if (rules.length > 0) {
         var left = rules.length;
         rules.forEach(function (rule) {
@@ -33,23 +33,23 @@ module.exports.transform = function (input, style, output, callback) {
         tokenizer = new Tokenizer(),
         serializer = new Serializer(),
         streams = [];
-       
+
     rules.forEach(function (rule) {
         if (typeof style[rule.name] !== 'undefined' && style[rule.name] !== null)
             enabledRules.push(rule);
     });
-       
+
     input.pipe(tokenizer);
     serializer.pipe(output);
-        
+
     if (enabledRules.length > 0) {
         var streams = [];
         streams.push(tokenizer);
-        
+
         for (var i = 0; i < enabledRules.length - 1; i++)
             streams.push(new Pipe());
         streams.push(serializer);
-    
+
         for (var i = 0; i < enabledRules.length; i++) {
             var rule = enabledRules[i];
             rule.transform(streams[i], style[rule.name], streams[i + 1], function (error) { });
@@ -57,10 +57,10 @@ module.exports.transform = function (input, style, output, callback) {
     } else {
         tokenizer.pipe(serializer);
     }
-    
+
     serializer.on('end', function () {
         callback(null);
     });
-    
+
     input.resume();
 };
